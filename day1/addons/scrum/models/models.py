@@ -39,5 +39,20 @@ class Task(models.Model):
     due = fields.Date()
     completed = fields.Date()
 
-#Task()
+
+"""
+from odoo.tests import common
+
+
+class TestTask(common.TransactionCase):
+    def test_task(self):
+        record = self.env['task'].create({'fields.name': 'viwe'})
+        self.assertEqual(record, 'viwe')
+
+def test():
+    t = TestTask()
+    t.test_task()
+
+test()
 #print(dir(Sprint()))
+"""
