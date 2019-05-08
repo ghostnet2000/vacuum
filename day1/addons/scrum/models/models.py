@@ -1,4 +1,4 @@
-from odoo import fields, models
+from odoo import fields, models, _
 
 
 class Sprint(models.Model):
@@ -14,7 +14,7 @@ class Sprint(models.Model):
 class Task(models.Model):
     """Unit of work to be done for the sprint."""
 
-    _name 'task'
+    _name = 'task'
 
     # n.b indexes are integers not strings
     STATUS_TODO = 1
@@ -32,7 +32,7 @@ class Task(models.Model):
     name = fields.Char()
     description = fields.Text()
     sprint = fields.One2many('sprint', delegate=True)
-    status = fields.Selection(selection=STATUS_CHOICE)
+    status = fields.Selection(selection=STATUS_CHOICES)
     order = fields.Integer()
     assigned = fields.Char()
     started = fields.Date()
