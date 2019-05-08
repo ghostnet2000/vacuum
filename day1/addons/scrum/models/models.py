@@ -38,3 +38,6 @@ class Task(models.Model):
     started = fields.Date()
     due = fields.Date()
     completed = fields.Date()
+
+Task()
+print(dir(Sprint()))
