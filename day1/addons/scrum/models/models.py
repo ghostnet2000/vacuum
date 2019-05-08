@@ -39,5 +39,5 @@ class Task(models.Model):
     due = fields.Date()
     completed = fields.Date()
 
-Task()
-print(dir(Sprint()))
+#Task()
+#print(dir(Sprint()))
