@@ -19,7 +19,7 @@ import youtube_dl
 from ffmpy import FFmpeg
 
 
-def download():
+def download(url):
 
     yts = [
         {'format': '133', 'outtmpl': 'video.mp4'},  # smallest hq video
@@ -27,11 +27,11 @@ def download():
     ]
 
     for f in yts:
-        with youtube_dl.YoutubeDL(f) as u:
-            u.download(['https://www.youtube.com/watch?v=_LMUWV1Tacs'])
+        with youtube_dl.YoutubeDL(f) as ydl:
+            ydl.download([url])
 
 
-def postprocessing():
+def post_processing():
     ff = FFmpeg(
         inputs={'video.mp4': None, 'audio.webm': None},
         outputs={'video.mkv': '-c:a libopus -b:a 25k'}
@@ -42,8 +42,19 @@ def postprocessing():
 
 
 def main():
-    download()
-    postprocessing()
+    import sys
+    if "--help" in sys.argv:
+        print(__doc__)
+        return
+
+    for arg in sys.argv[1:]:
+        try:
+            download(arg)
+            post_processing()
+        except:
+            print("Failed to download %r, error:" % arg)
+            import traceback
+            traceback.print_exc()
 
 if __name__ == "__main__":
     main()
