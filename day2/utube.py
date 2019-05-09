@@ -11,9 +11,9 @@ This script will download a youtube video for url argument given.
 Output
 ======
 
-The video downloaded post processed into mkv format with 360p video + opus audion25kb/s:
+The video downloaded, post processed into mkv format with 360p video + opus audio 25kb/s:
 """
-# pep8 complaint 
+# <pep8 complaint>
 
 import youtube_dl
 from ffmpy import FFmpeg
@@ -30,11 +30,19 @@ def download(url):
         with youtube_dl.YoutubeDL(f) as ydl:
             ydl.download([url])
 
+def extract_audio(media, bitrate):
+    extract_cmd = '-c:a libopus -b:a %r' % bitrate
+    ff = FFmpeg(
+        inputs={media: None },
+        outputs={'audio.opus': extract_cmd}
+    )
+    ff.run()
 
 def post_processing():
+    extract_audio('audio.webm', '25k')   # convert audio to opus 25kb/s
     ff = FFmpeg(
-        inputs={'video.mp4': None, 'audio.webm': None},
-        outputs={'video.mkv': '-c:a libopus -b:a 25k'}
+        inputs={'video.mp4': None},
+        outputs={'video.mkv': '-i audio.opus -c copy'}
     )
 
     print(ff.cmd)
@@ -57,4 +65,4 @@ def main():
             traceback.print_exc()
 
 if __name__ == "__main__":
-    main()
+     main()
