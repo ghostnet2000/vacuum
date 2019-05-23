@@ -6,7 +6,7 @@ from shlex import quote
 
 class editor_toolbox():
     # fake module
-    slots = ()
+    __slots__ = ()
 
     def __new__(cls, *args, **kwargs):
         raise RuntimeError(f"{cls!r}" " should not be instantiated")
